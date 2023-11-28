@@ -52,11 +52,12 @@
 
   block:
     - name: GitHub Actions Runner | Uninstall previous service
+      become: true
       ansible.builtin.command:
         cmd: "{{ gh_runner_path }}/svc.sh uninstall"
         chdir: "{{ gh_runner_path }}"
       changed_when: abandoned_credentials.stat.exists
-      become: "{{ ansible_os_family != 'Darwin' }}"
+      when: "{{ ansible_os_family != 'Darwin' }}"
 
     - name: GitHub Actions Runner | Remove previous configuration before proceeding
       become: true
@@ -82,12 +83,11 @@
         --url {{ gh_runner_config_url }} \
         --token {{ gh_runner_config_token }} \
         --name {{ gh_runner_config_name }} \
-        --runnergroup "{{ gh_runner_config_runnergroup }}" \
+        --runnergroup {{ gh_runner_config_runnergroup }} \
         --work {{ gh_runner_workspace_path }} \
         --labels {{ gh_runner_config_labels | join(',') }}
     chdir: "{{ gh_runner_path }}"
   register: config_host_command
-
   when: not is_this_host_token_registered.stat.exists
   tags:
     - configure
@@ -114,6 +114,7 @@
 # registration token was already used. i.e. the is_this_host_token_registered
 # variable registered and used in the credential above.
 - name: GitHub Actions Runner | Create state file
+  become: true
   ansible.builtin.file:
     path: "{{ gh_runner_path }}/hosts/{{ gh_runner_config_token | hash('sha256') }}"
     state: touch
@@ -121,34 +122,34 @@
   when:
     - config_host_command is defined
     - config_host_command is success
-  become: true
   tags:
     - configure
 
 - name: GitHub Actions Runner | Install service
+  become: true
   ansible.builtin.command:
     cmd: "{{ gh_runner_path }}/svc.sh install {{ gh_runner_service_user }}"
     chdir: "{{ gh_runner_path }}"
-  become: "{{ ansible_os_family != 'Darwin' }}"
-  when: not is_this_host_token_registered.stat.exists
+  when: ansible_os_family != 'Darwin' and not is_this_host_token_registered.stat.exists
   tags:
     - install
 
 - name: GitHub Actions Runner | Check service status
+  become: true
   ansible.builtin.command:
     cmd: "{{ gh_runner_path }}/svc.sh status"
     chdir: "{{ gh_runner_path }}"
   register: gh_runner_service_status
   changed_when: false # never changes, this is just a read-only command
-  become: "{{ ansible_os_family != 'Darwin' }}"
+  when: "{{ ansible_os_family != 'Darwin' }}"
   tags:
     - configure
 
 - name: GitHub Actions Runner | Start service
+  become: true
   ansible.builtin.command:
     cmd: "{{ gh_runner_path }}/svc.sh start"
     chdir: "{{ gh_runner_path }}"
-  when: not '"active (running)"' in gh_runner_service_status.stdout
-  become: "{{ ansible_os_family != 'Darwin' }}"
+  when: ansible_os_family != 'Darwin' and not '"active (running)"' in gh_runner_service_status.stdout
   tags:
     - configure

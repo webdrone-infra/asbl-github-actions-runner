@@ -13,7 +13,7 @@ gh_runner_download_base_url: https://github.com/actions/runner/releases/download
 # GitHub Actions runner version to download and install. Multiple parallel
 # versions are supported since every installation+configuration (either
 # repository or organization) has its own path.
-gh_runner_version: 2.290.1
+gh_runner_version: 2.311.0
 
 # GitHub Actions runner architecture, used together with the version to compose
 # the complete URL that is used to download the package.
@@ -55,7 +55,7 @@ gh_runner_config_labels: ["self-hosted"]
 gh_runner_config_name: "{{ ansible_hostname }}"
 
 # Set the runner group to add the runner to. If left blank, the default runner group will be used.
-gh_runner_config_runnergroup: ""
+gh_runner_config_runnergroup: "default"
 
 # Allow/Refuse to configure the runner as root. If left blank, the root user is not allowed to configure the runner.
 gh_runner_allow_runasroot: ""

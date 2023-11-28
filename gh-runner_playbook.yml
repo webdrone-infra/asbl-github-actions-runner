@@ -1,0 +1,11 @@
+---
+# Define here the hosts or the group (by default all the inventory)
+- hosts: all
+
+  roles:
+    - role: gh_runner
+      # become: yes
+      tags: [gh_runner]
+
+    
+

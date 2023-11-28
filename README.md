@@ -33,16 +33,19 @@ Runner without them
 Simplest use case: Single repository configuration on one host.
 
 ```yaml
-- hosts: foo
-  roles:
-    - role: macunha1.github_actions_runner
-      vars:
-        gh_runner_config_labels:
-          - linux
-          - self-hosted
+- hosts: all
+  vars:
+    gh_runner_config_labels:
+      - linux
+      - self-hosted
 
-        gh_runner_config_url: https://github.com/macunha1/ansible-github-actions-runner
-        gh_runner_config_token: AC5TNLJP9SBAFNEKKLLBLF264J8XO
+    gh_runner_config_url: https://github.com/macunha1/ansible-github-actions-runner
+    gh_runner_config_token: AC5TNLJP9SBAFNEKKLLBLF264J8XO
+
+  roles:
+    - role: gh_runner
+      # become: yes
+      tags: [gh_runner]
 ```
 
 Complex use case to which this role was created for
@@ -74,13 +77,6 @@ Note that despite using the same host, each one of these GitHub Actions Runner
 configuration will have its own path and credentials. Therefore, they can live
 well in harmony without killing each other.
 
-## Contribute
+## Sources : 
 
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-
-Feel free to fill [an issue](https://github.com/macunha1/ansible-github-actions-runner/issues)
-containing feature request(s), or (even better) to send me a Pull request, I
-would be happy to collaborate with you.
-
-If this role didn't work for you, or if you found some bug during the execution,
-let me know.
+- [macunha1 original repository](https://github.com/macunha1/ansible-github-actions-runner)
