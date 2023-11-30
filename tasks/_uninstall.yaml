@@ -4,6 +4,7 @@
 
 
 - name: GitHub Actions Runner [!!] DESTROY! | Uninstall service
+  become: true
   ansible.builtin.command:
     cmd: "{{ gh_runner_path }}/svc.sh uninstall"
     chdir: "{{ gh_runner_path }}"
