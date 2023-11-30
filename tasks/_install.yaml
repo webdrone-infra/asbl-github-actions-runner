@@ -61,7 +61,7 @@
         cmd: "{{ gh_runner_path }}/svc.sh uninstall"
         chdir: "{{ gh_runner_path }}"
       changed_when: abandoned_credentials.stat.exists
-      when: ansible_os_family != 'Darwin
+      when: ansible_os_family != 'Darwin'
 
     - name: GitHub Actions Runner | Remove previous configuration before proceeding
       become: true
@@ -146,7 +146,7 @@
     chdir: "{{ gh_runner_path }}"
   register: gh_runner_service_status
   changed_when: false # never changes, this is just a read-only command
-  when: ansible_os_family != 'Darwin
+  when: ansible_os_family != 'Darwin'
   tags:
     - configure
 
