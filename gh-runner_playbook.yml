@@ -1,11 +1,7 @@
 ---
-# Define here the hosts or the group (by default all the inventory)
 - hosts: all
 
   roles:
-    - role: gh_runner
+    - role: github_actions_runner
       # become: yes
-      tags: [gh_runner]
-
-    
-
+      tags: [github_actions_runner]

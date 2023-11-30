@@ -1,11 +1,16 @@
 ---
+# file : main.yml
+# description : entrypoint for gh runner installation and configuration
+
 - name: Variables | Check mandatory
+  when: not gh_runner_remove_host
   ansible.builtin.assert:
     that:
       - gh_runner_config_url is defined
       - gh_runner_config_token is defined
 
 - name: Variables | Set installation path
+  when: not gh_runner_remove_host
   ansible.builtin.set_fact:
     # Set a exclusive path for the GitHub Actions Runner in order to support
     # multiple repository or organizations configured inside the same host.
@@ -28,6 +33,12 @@
 
 - name: GitHub Actions Runner | Import Download tasks
   ansible.builtin.import_tasks:
+    file: _dependencies.yaml
+  tags:
+    - dependencies
+
+- name: GitHub Actions Runner | Import Download tasks
+  ansible.builtin.import_tasks:
     file: _download.yaml
   tags:
     - install
@@ -45,20 +56,3 @@
     file: _uninstall.yaml
   tags:
     - uninstall
-
-# - name: GitHub Actions Runner | Import Download tasks
-#   ansible.builtin.import_tasks: "../includes/download.yaml"
-#   tags:
-#     - install
-# 
-# - name: GitHub Actions Runner | Import Install tasks
-#   ansible.builtin.import_tasks: "../includes/install.yaml"
-#   tags:
-#     - install
-#     - configure
-# 
-# - name: GitHub Actions Runner | Include Uninstall tasks
-#   ansible.builtin.include_tasks: "../includes/uninstall.yaml"
-#   when: gh_runner_remove_host
-#   tags:
-#     - uninstall

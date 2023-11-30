@@ -1,4 +1,8 @@
 ---
+
+gh_runner_dependencies_package:
+  - git
+
 # Temporary path to download the GitHub Actions runner archive
 tmp_download_path: /tmp
 

@@ -1,0 +1,10 @@
+---
+# file : _dependencies.yml
+# description : install gh runner dependencies
+
+- name: install gh runner dependencies
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ gh_runner_dependencies_package }}"
+  when: gh_runner_dependencies_package is defined and gh_runner_dependencies_package is iterable

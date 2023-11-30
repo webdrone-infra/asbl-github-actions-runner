@@ -1,0 +1,12 @@
+---
+
+- name: install_packages
+  scm: git
+  src: git@codeberg.org:Vesta/asbl-install_packages.git
+  version: main  
+
+- name: docker_configuration
+  scm: git
+  src: git@codeberg.org:Vesta/asbl-install_docker.git
+  version: main
+

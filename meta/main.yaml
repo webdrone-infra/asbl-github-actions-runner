@@ -4,7 +4,7 @@ galaxy_info:
   author: Matheus Cunha
   description: >
     Idempotent Ansible role that installs and configures self-hosted GitHub
-    Actions Runners (yeah, plural!)
+    Actions Runners
   license: MIT
   company: None
   min_ansible_version: "2.2"
@@ -26,3 +26,8 @@ galaxy_info:
     - actions
     - workflows
     - runner
+
+# ## installing docker 
+# dependencies:
+#   - role: docker_configuration
+#     become: yes

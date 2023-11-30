@@ -1,4 +1,8 @@
 ---
+# file : _uninstall.yml
+# description : uninstall gh runner package
+
+
 - name: GitHub Actions Runner [!!] DESTROY! | Uninstall service
   become: true
   ansible.builtin.command:
