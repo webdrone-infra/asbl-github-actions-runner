@@ -4,14 +4,12 @@
 
 
 - name: GitHub Actions Runner [!!] DESTROY! | Uninstall service
-  become: true
   ansible.builtin.command:
     cmd: "{{ gh_runner_path }}/svc.sh uninstall"
     chdir: "{{ gh_runner_path }}"
-  when: "{{ ansible_os_family != 'Darwin' }}"
+  when: ansible_os_family != 'Darwin'
 
 - name: GitHub Actions Runner [!!] DESTROY! | De-register Runner
-  become: true
   ansible.builtin.command:
     cmd: |-
       {{ gh_runner_path }}/config.sh remove \
