@@ -1,7 +1,29 @@
 ---
 - hosts: all
+  vars_files:
+    - group_vars/main.yml
 
   roles:
+    ## Reminder "asbl-user_and_group" must be run as root user without become
+    - role: user_and_group
+      tags: [user_and_group]
+
+    - role: install_packages
+      become: true
+      become_user: "{{ install_packages_user }}"
+      tags: [install_packages]
+
+    - role: install_docker
+      become: true
+      become_user: "{{ docker_configuration_user }}"
+      tags: [install_docker]
+
+    - role: install_python
+      become: true
+      become_user: "{{ install_python_user }}"
+      tags: [install_python]
+
     - role: github_actions_runner
-      # become: yes
+      become: true
+      become_user: "{{ github_actions_runner_user }}"
       tags: [github_actions_runner]

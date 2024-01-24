@@ -1,12 +1,29 @@
 ---
 
-- name: install_packages
+- name: asbl-iam_linux
   scm: git
-  src: git@codeberg.org:Vesta/asbl-install_packages.git
-  version: main  
-
-- name: docker_configuration
-  scm: git
-  src: git@codeberg.org:Vesta/asbl-install_docker.git
+  src: git@github.com:webdrone-infra/asbl-iam_linux.git
   version: main
+
+- name: apt_packages_install
+  scm: git
+  src: git@github.com:webdrone-infra/asbl-apt_packages_install.git
+  version: main
+
+- name: docker_install
+  scm: git
+  src: git@github.com:webdrone-infra/asbl-docker_install.git
+  version: main
+
+- name: python_install
+  scm: git
+  src: git@github.com:webdrone-infra/asbl-python_install.git
+  version: master
+
+- name: github_actions_runner
+  scm: git
+  src: git@github.com:webdrone-infra/asbl-github-actions-runner.git
+  version: master
+
+
 
